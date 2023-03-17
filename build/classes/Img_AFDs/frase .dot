@@ -1,0 +1,51 @@
+digraph grafo_afd {
+
+ fontname="Helvetica,Arial,sans-serif"
+
+edge [fontname="Helvetica,Arial,sans-serif"]
+
+rankdir=LR;
+
+s6[shape=doublecircle]
+
+Inicio [shape=box]
+
+Inicio -> s0
+
+node [shape = circle];
+
+s0->s1[label = "C"];
+
+s1->s2[label = "O"];
+
+s2->s3[label = "M"];
+
+s3->s4[label = "P"];
+
+s4->s5[label = "I"];
+
+s5->s6[label = "1"];
+
+s6->s6[label = "letra"];
+
+s6->s6[label = "digito"];
+
+s6->s6[label = "espacio"];
+
+afd [ 
+
+fillcolor="#ff880022"
+
+label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="18"> 
+
+<tr> <td> <b>Nombre AFD: frase </b> </td> </tr> 
+
+</table>> 
+
+shape=plain 
+
+ ]
+
+} 
+
+

@@ -15,18 +15,39 @@ import javax.swing.UnsupportedLookAndFeelException;
 import Analizador.parser;
 import Analizador.scanner;
 
+import Estructuras.ExpresionRG;
+import Estructuras.Gestor;
+import Estructuras.Nodo;
+import Estructuras.Arbol;
+import Estructuras.Graficas;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
+
+
 public class Inicio extends javax.swing.JFrame {
 
     /**
      * Creates new form Inicio
      */
+    
+    
+    ArrayList<ExpresionRG> expresiones;
+    Gestor gestor;
+    
+    
     //ESTE ES EL CONSTRUCTOR
+    
+    
     
 
     public Inicio() {
         initComponents();
         //setTitle("Menu Inicial");
         //setResizable(false);
+        this.expresiones = new ArrayList<ExpresionRG>();
+        this.gestor = new Gestor();
         this.setLocationRelativeTo(null);
         
         
@@ -204,7 +225,7 @@ public class Inicio extends javax.swing.JFrame {
                 }
                 reader.close();
                 TextoArchivo.setText(texto);
-                System.out.println(texto);
+                //System.out.println(texto);
                
                
              
@@ -223,9 +244,9 @@ public class Inicio extends javax.swing.JFrame {
             parser parser = new parser(scanner);
             parser.parse();
             System.out.println("Analisis finalizado");
+            this.expresiones.clear();
             
             
-  
             String texto_errores = "";
                        
              // generar reporte de errores lexicos
@@ -239,6 +260,39 @@ public class Inicio extends javax.swing.JFrame {
                 if (parser.erroresSintacticos.isEmpty()) {
                     texto_errores += "\nNo se encontraron erorres sintacticos";
                     Consola.setText(texto_errores);
+                    
+                    
+                    //System.out.println(parser.expresiones_regulares);
+                    //copio las expresiones del cup a mi variable para poder usarlas
+                    this.expresiones = (ArrayList<ExpresionRG>) parser.expresiones_regulares.clone();
+                    /*
+                    for (ExpresionRG ex:parser.expresiones_regulares){
+                        this.expresiones.add(ex);
+                    }*/
+                    
+                    for (ExpresionRG ex:this.expresiones){
+
+                        System.out.println("--------------------");
+                        System.out.println("Nombre-> "+ ex.getNombre());
+                        System.out.println("Simbolos-> "+ex.getListaExpresiones());                        
+                        System.out.println("Simbolos con . y #-> "+ex.getExpresionConAceptacion());
+                        System.out.println("Simbolos en Texto-> "+ex.getExpresionTexto());
+                        System.out.println("--------------------");
+                      
+                        Nodo raiz = this.gestor.regresarRaiz(ex.getExpresionConAceptacion());
+
+                        Arbol arbol = new Arbol(raiz,ex.getNombre());
+                        ex.setArbol(arbol);
+                        
+                       /* ex.getArbol().GraficarSintactico();*/
+                        ex.setSiguientes(this.gestor.regresarListaSiguientes());
+                        ex.setEstados(this.gestor.regresarListaEstados());
+                        Graficas grafica = new Graficas(ex.getSiguientes(),ex.getEstados(),ex.getNombre());
+                        grafica.graficarAFD();
+
+                    }
+                    
+                    parser.expresiones_regulares.clear();
                 } else {
                     
                     
@@ -248,6 +302,7 @@ public class Inicio extends javax.swing.JFrame {
                     /*parser.erroresSintacticos.forEach((error) -> {
                         System.out.println(error.getTipo() + "| " + error.getDescripcion() + "| " + error.getLinea() + "| " + error.getColumna());   
                     });*/
+                    
                     Consola.setText(texto_errores);
                 }
                  //----------------------------
