@@ -95,7 +95,8 @@ InputCharacter = [^\r\n]
 
 // caracter_etc = .|[^.]
 comentariosimple    = "//" {InputCharacter}* {LineTerminator}?
-comentarioMultiple = \<\!(\n*.*)*\!\>
+// comentarioMultiple = \<\!(\n*.*)*\!\>
+comentarioMultiple = "<!" [^/]~ "!>"
 
 // TEXTO2= \"[a-zA-Z]*[0-9]*\"
 

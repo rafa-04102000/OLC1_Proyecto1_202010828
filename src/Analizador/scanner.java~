@@ -38,14 +38,14 @@ public class scanner implements java_cup.runtime.Scanner {
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\11\0\1\47\1\50\1\52\1\52\1\51\22\0\1\46\1\1\1\2"+
+    "\11\0\1\47\1\50\1\47\1\47\1\51\22\0\1\46\1\1\1\2"+
     "\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14"+
     "\1\15\1\16\1\17\12\45\1\20\1\21\1\22\1\23\1\24\1\25"+
     "\1\26\2\45\1\41\6\45\1\44\3\45\1\43\1\42\13\45\1\27"+
     "\1\30\1\31\1\32\1\33\1\34\2\45\1\41\6\45\1\44\3\45"+
-    "\1\43\1\42\13\45\1\35\1\36\1\37\1\40\6\0\1\52\32\0"+
+    "\1\43\1\42\13\45\1\35\1\36\1\37\1\40\6\0\1\47\32\0"+
     "\1\47\60\0\1\45\37\0\1\45\u158e\0\1\47\u097f\0\13\47\35\0"+
-    "\1\52\1\52\5\0\1\47\57\0\1\47\u0fa0\0\1\47\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\ud00f\0";
+    "\1\47\1\47\5\0\1\47\57\0\1\47\u0fa0\0\1\47\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\ud00f\0";
 
   /** 
    * Translates characters to character classes
@@ -63,7 +63,7 @@ public class scanner implements java_cup.runtime.Scanner {
     "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27"+
     "\1\30\1\31\1\32\1\33\1\34\1\35\1\36\1\37"+
     "\1\40\1\41\2\42\1\43\1\44\1\45\1\0\1\46"+
-    "\2\42\2\45\1\0\1\42\1\47\1\50";
+    "\1\42\2\45\1\0\1\42\1\0\1\47\1\50";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[49];
@@ -91,13 +91,13 @@ public class scanner implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\53\0\53\0\53\0\53\0\53\0\126\0\53"+
-    "\0\53\0\53\0\53\0\53\0\53\0\53\0\53\0\53"+
-    "\0\201\0\53\0\53\0\254\0\53\0\53\0\53\0\53"+
-    "\0\53\0\327\0\53\0\53\0\u0102\0\53\0\53\0\53"+
-    "\0\53\0\53\0\u012d\0\u0102\0\53\0\53\0\u0158\0\u0183"+
-    "\0\53\0\u01ae\0\u01d9\0\53\0\u0204\0\u022f\0\u025a\0\u0183"+
-    "\0\u0102";
+    "\0\0\0\52\0\52\0\52\0\52\0\52\0\124\0\52"+
+    "\0\52\0\52\0\52\0\52\0\52\0\52\0\52\0\52"+
+    "\0\176\0\52\0\52\0\250\0\52\0\52\0\52\0\52"+
+    "\0\52\0\322\0\52\0\52\0\374\0\52\0\52\0\52"+
+    "\0\52\0\52\0\u0126\0\374\0\52\0\52\0\u0150\0\u017a"+
+    "\0\52\0\u01a4\0\52\0\u01ce\0\u01f8\0\u0222\0\u024c\0\374"+
+    "\0\52";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[49];
@@ -127,17 +127,16 @@ public class scanner implements java_cup.runtime.Scanner {
     "\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21"+
     "\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31"+
     "\1\32\1\33\1\34\1\35\1\36\1\37\1\40\1\41"+
-    "\1\42\1\43\4\44\5\45\60\0\1\46\64\0\1\47"+
-    "\34\0\1\50\114\0\1\51\42\0\1\44\5\0\5\44"+
-    "\1\52\37\0\1\44\5\0\1\44\1\53\3\44\1\52"+
-    "\4\0\50\47\1\54\1\55\1\47\1\50\1\56\47\50"+
-    "\50\0\1\52\37\0\1\44\5\0\2\44\1\57\2\44"+
-    "\1\52\54\0\1\54\2\0\1\50\1\56\22\50\1\60"+
-    "\24\50\35\0\1\44\5\0\3\44\1\61\1\44\1\52"+
-    "\4\0";
+    "\1\42\1\43\4\44\4\45\57\0\1\46\63\0\1\47"+
+    "\33\0\1\50\113\0\1\51\41\0\1\44\5\0\6\44"+
+    "\36\0\1\44\5\0\1\44\1\52\4\44\3\0\50\47"+
+    "\1\53\1\54\17\55\1\0\32\55\33\0\1\44\5\0"+
+    "\2\44\1\56\3\44\53\0\1\53\1\0\1\55\1\57"+
+    "\50\55\33\0\1\44\5\0\3\44\1\60\2\44\3\0"+
+    "\1\55\1\57\22\55\1\61\25\55";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[645];
+    int [] result = new int[630];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -177,7 +176,8 @@ public class scanner implements java_cup.runtime.Scanner {
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\5\11\1\1\11\11\1\1\2\11\1\1\5\11"+
     "\1\1\2\11\1\1\5\11\2\1\2\11\1\1\1\0"+
-    "\1\11\2\1\1\11\1\1\1\0\3\1";
+    "\1\11\1\1\1\11\1\1\1\0\1\1\1\0\1\1"+
+    "\1\11";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[49];
@@ -839,12 +839,12 @@ public class scanner implements java_cup.runtime.Scanner {
             // fall through
           case 78: break;
           case 39: 
-            { System.out.println("Comentario multilinea: "+ yytext());
+            { return new Symbol(sym.RCONJUNTO, yyline, yycolumn,yytext());
             } 
             // fall through
           case 79: break;
           case 40: 
-            { return new Symbol(sym.RCONJUNTO, yyline, yycolumn,yytext());
+            { System.out.println("Comentario multilinea: "+ yytext());
             } 
             // fall through
           case 80: break;

@@ -1,0 +1,152 @@
+digraph tabla_siguientes {
+
+graph [
+newrank = true,
+nodesep = 0.3,
+ranksep = 0.2,
+overlap = true,
+splines = false,
+] 
+
+node  [shape=none fontname=Helvetica]
+
+nodo1 [ label = <
+
+<table>
+
+<tr>
+
+<td rowspan="2" bgcolor="#F20101" >Estados</td>
+
+<td colspan="9" bgcolor="#F26001" >Terminales</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#F2DC01">C</td>
+
+<td bgcolor="#F2DC01">O</td>
+
+<td bgcolor="#F2DC01">M</td>
+
+<td bgcolor="#F2DC01">P</td>
+
+<td bgcolor="#F2DC01">I</td>
+
+<td bgcolor="#F2DC01">1</td>
+
+<td bgcolor="#F2DC01">letra</td>
+
+<td bgcolor="#F2DC01">digito</td>
+
+<td bgcolor="#F2DC01">espacio</td>
+
+</tr>
+
+<tr>
+<td>s0[
+Transicion{origen=s0, destino=s1, entrada=C}]</td>
+<td>s1</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>s1[
+Transicion{origen=s1, destino=s2, entrada=O}]</td>
+<td>---</td>
+<td>s2</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>s2[
+Transicion{origen=s2, destino=s3, entrada=M}]</td>
+<td>---</td>
+<td>---</td>
+<td>s3</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>s3[
+Transicion{origen=s3, destino=s4, entrada=P}]</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>s4</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>s4[
+Transicion{origen=s4, destino=s5, entrada=I}]</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>s5</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>s5[
+Transicion{origen=s5, destino=s6, entrada=1}]</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>s6</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>s6[
+Transicion{origen=s6, destino=s6, entrada=letra}, 
+Transicion{origen=s6, destino=s6, entrada=digito}, 
+Transicion{origen=s6, destino=s6, entrada=espacio}]</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>s6</td>
+<td>s6</td>
+<td>s6</td>
+</tr>
+</table>>];
+
+	LKD [
+fontsize = 20,
+label = "Tabla de transiciones: frase ",
+shape = plain,
+style = ""]
+
+LKD -> nodo1 [style = invis]
+
+} 
+
+

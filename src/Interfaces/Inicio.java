@@ -284,11 +284,14 @@ public class Inicio extends javax.swing.JFrame {
                         Arbol arbol = new Arbol(raiz,ex.getNombre());
                         ex.setArbol(arbol);
                         
-                       /* ex.getArbol().GraficarSintactico();*/
+                        ex.getArbol().GraficarSintactico();
                         ex.setSiguientes(this.gestor.regresarListaSiguientes());
                         ex.setEstados(this.gestor.regresarListaEstados());
                         Graficas grafica = new Graficas(ex.getSiguientes(),ex.getEstados(),ex.getNombre());
-                        grafica.graficarAFD();
+                        grafica.graficarTablaSiguientes();
+                        grafica.graficarTablaTransiciones();
+                        grafica.graficarAFD();                        
+
 
                     }
                     
