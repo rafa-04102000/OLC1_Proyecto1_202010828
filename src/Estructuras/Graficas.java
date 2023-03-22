@@ -24,6 +24,11 @@ public class Graficas {
     }
     
     
+    public void graficar(){
+        graficarTablaSiguientes();      
+        graficarTablaTransiciones();
+        graficarAFD();
+    }
     
     public void graficarTablaSiguientes(){
         String grafica = "digraph tabla_siguientes {\n\n";
@@ -211,7 +216,21 @@ public class Graficas {
         
         for (Estado estado:this.estados){
             for(Transicion transicion:estado.transiciones){
-                grafica += transicion.origen + "->" + transicion.destino + "[label = \""+ transicion.entrada +"\"];" +  "\n\n";
+                String modificacion = "";
+                if(transicion.entrada.equals("\\n") || transicion.entrada.equals("\\\"") || transicion.entrada.equals("\\\'") || transicion.entrada.equals("\\")){
+                    if (transicion.entrada.equals("\\\"")){
+                        modificacion = "\\\\"+transicion.entrada;
+                    }else{
+                        modificacion = "\\"+transicion.entrada;
+                    }
+                      grafica += transicion.origen + "->" + transicion.destino + "[label = \""+ modificacion+"\"];" +  "\n\n";
+                }else{                
+                   grafica += transicion.origen + "->" + transicion.destino + "[label = \""+ transicion.entrada +"\"];" +  "\n\n";
+                }
+
+
+                
+               // grafica += transicion.origen + "->" + transicion.destino + "[label = \""+ transicion.entrada +"\"];" +  "\n\n";
             }
         }
         

@@ -8,70 +8,80 @@ package Analizador;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int RCONJUNTO = 36;
-  public static final int MENOS_GUION = 15;
-  public static final int PAR_DER = 11;
-  public static final int INTERROGACION = 24;
-  public static final int DOBLE_PUNTO = 19;
-  public static final int POR = 12;
-  public static final int MENORQ = 21;
-  public static final int BARRA_INV = 27;
-  public static final int PORCENTAJE = 7;
-  public static final int COR_DER = 28;
-  public static final int ACENTO = 31;
-  public static final int SEPARADOR = 6;
-  public static final int LLAVE_IZQ = 32;
-  public static final int IGUAL = 22;
-  public static final int OR = 33;
-  public static final int ARROBA = 25;
-  public static final int AMPERSAND = 8;
-  public static final int EXCLAMACION = 2;
-  public static final int COMILLA_DOBLE = 3;
+  public static final int RCONJUNTO = 2;
+  public static final int PAR_DER = 16;
+  public static final int KLEENE = 17;
+  public static final int DOBLE_PUNTO = 23;
+  public static final int flecha = 6;
+  public static final int BARRA_INV = 31;
+  public static final int ENTERO = 40;
+  public static final int PORCENTAJE = 12;
+  public static final int COR_DER = 32;
+  public static final int ACENTO = 35;
+  public static final int SEPARADOR = 7;
+  public static final int LLAVE_IZQ = 36;
+  public static final int IGUAL = 26;
+  public static final int LETRA = 41;
+  public static final int OR = 37;
+  public static final int ARROBA = 29;
+  public static final int OPCIONAL = 28;
+  public static final int GUION = 20;
+  public static final int AMPERSAND = 13;
+  public static final int ID = 42;
+  public static final int EXCLAMACION = 8;
+  public static final int COMILLA_DOBLE = 9;
   public static final int EOF = 0;
   public static final int error = 1;
-  public static final int COMILLA = 9;
-  public static final int COMA = 14;
-  public static final int DIV_BARRA = 18;
-  public static final int VERGULILLA = 35;
-  public static final int PAR_IZQ = 10;
-  public static final int ELVACION = 29;
-  public static final int GUION_BAJO = 30;
-  public static final int LLAVE_DER = 34;
-  public static final int PUNTO = 16;
-  public static final int MAYORQ = 23;
-  public static final int NUMERAL = 4;
-  public static final int COR_IZQ = 26;
-  public static final int PTCOMA = 20;
-  public static final int TEXTO = 37;
-  public static final int SALTO = 17;
-  public static final int DOLAR = 5;
-  public static final int MAS = 13;
+  public static final int COMILLA = 14;
+  public static final int COMA = 19;
+  public static final int CADENA = 43;
+  public static final int MAYOR_QUE = 27;
+  public static final int POSITIVA = 18;
+  public static final int DIV_BARRA = 21;
+  public static final int VERGULILLA = 39;
+  public static final int PAR_IZQ = 15;
+  public static final int ELVACION = 33;
+  public static final int GUION_BAJO = 34;
+  public static final int COMILLA_SIMPLE_ESPECIAL = 4;
+  public static final int LLAVE_DER = 38;
+  public static final int COMILLA_DOBLE_ESPECIAL = 5;
+  public static final int NUMERAL = 10;
+  public static final int COR_IZQ = 30;
+  public static final int PTCOMA = 24;
+  public static final int SALTO_LINEA = 3;
+  public static final int CONCATENACION = 22;
+  public static final int MENOR_QUE = 25;
+  public static final int DOLAR = 11;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
+  "RCONJUNTO",
+  "SALTO_LINEA",
+  "COMILLA_SIMPLE_ESPECIAL",
+  "COMILLA_DOBLE_ESPECIAL",
+  "flecha",
+  "SEPARADOR",
   "EXCLAMACION",
   "COMILLA_DOBLE",
   "NUMERAL",
   "DOLAR",
-  "SEPARADOR",
   "PORCENTAJE",
   "AMPERSAND",
   "COMILLA",
   "PAR_IZQ",
   "PAR_DER",
-  "POR",
-  "MAS",
+  "KLEENE",
+  "POSITIVA",
   "COMA",
-  "MENOS_GUION",
-  "PUNTO",
-  "SALTO",
+  "GUION",
   "DIV_BARRA",
+  "CONCATENACION",
   "DOBLE_PUNTO",
   "PTCOMA",
-  "MENORQ",
+  "MENOR_QUE",
   "IGUAL",
-  "MAYORQ",
-  "INTERROGACION",
+  "MAYOR_QUE",
+  "OPCIONAL",
   "ARROBA",
   "COR_IZQ",
   "BARRA_INV",
@@ -83,8 +93,10 @@ public class sym {
   "OR",
   "LLAVE_DER",
   "VERGULILLA",
-  "RCONJUNTO",
-  "TEXTO"
+  "ENTERO",
+  "LETRA",
+  "ID",
+  "CADENA"
   };
 }
 

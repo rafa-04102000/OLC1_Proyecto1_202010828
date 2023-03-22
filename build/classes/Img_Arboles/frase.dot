@@ -1,6 +1,6 @@
 digraph Arbol_Sintactico{
 
-nombre [ style=filled, label="frase ", color="#000000" ,fontcolor=white, fillcolor="#D38B0D" ,shape=square]
+nombre [ style=filled, label="frase", color="#000000" ,fontcolor=white, fillcolor="#D38B0D" ,shape=square]
 
 node [shape = record style = filled fillcolor = "#E8254C" fontcolor = white fontname="Helvetica,Arial,sans-serif" ]
 
@@ -42,7 +42,7 @@ node001111110000[label = " [7]|{false|letra|--}|[7]"];
 node00111111000 -> node001111110001[color  = "#3277CA"]
 node001111110001[label = " [8]|{false|digito|--}|[8]"];
 node0011111100 -> node00111111001[color  = "#3277CA"]
-node00111111001[label = " [9]|{false|espacio|--}|[9]"];
+node00111111001[label = " [9]|{false| |--}|[9]"];
 node0 -> node01[color  = "#3277CA"]
 node01[label = " [10]|{false|#|--}|[10]"];
 

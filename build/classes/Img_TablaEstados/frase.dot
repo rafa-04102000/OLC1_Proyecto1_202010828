@@ -40,7 +40,7 @@ nodo1 [ label = <
 
 <td bgcolor="#F2DC01">digito</td>
 
-<td bgcolor="#F2DC01">espacio</td>
+<td bgcolor="#F2DC01"> </td>
 
 </tr>
 
@@ -132,7 +132,7 @@ nodo1 [ label = <
 
 	LKD [
 fontsize = 20,
-label = "Tabla de transiciones: frase ",
+label = "Tabla de transiciones: frase",
 shape = plain,
 style = ""]
 

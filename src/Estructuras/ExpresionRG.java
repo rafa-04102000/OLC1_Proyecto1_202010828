@@ -18,6 +18,7 @@ public class ExpresionRG {
     Arbol arbol;
     ArrayList<Siguiente> siguientes;
     ArrayList<Estado> estados;
+    Graficas graficas;
 
 
     
@@ -67,8 +68,18 @@ public class ExpresionRG {
     public ArrayList<Estado> getEstados() {
         return estados;
     }
-    /// seters
     
+    
+    public Graficas getGraficas() {
+        return graficas;
+    }
+
+    
+    public void graficar(){
+        this.graficas.graficar();
+    }
+    /// seters
+
     
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -95,12 +106,13 @@ public class ExpresionRG {
         this.siguientes = siguientes;
     }
 
-
-
     public void setEstados(ArrayList<Estado> estados) {
         this.estados = estados;
     }
 
+     public void setGraficas(Graficas graficas) {
+        this.graficas = graficas;
+    }
     
     
     

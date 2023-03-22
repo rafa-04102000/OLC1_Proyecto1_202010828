@@ -27,19 +27,14 @@ parser code
 :}
 
 
-
-terminal String EXCLAMACION,COMILLA_DOBLE,NUMERAL,DOLAR,SEPARADOR,PORCENTAJE,AMPERSAND,COMILLA,PAR_IZQ,PAR_DER,POR,MAS,COMA,MENOS_GUION,PUNTO,SALTO,DIV_BARRA;
-terminal String DOBLE_PUNTO,PTCOMA,MENORQ,IGUAL,MAYORQ,INTERROGACION,ARROBA;
-terminal String COR_IZQ,BARRA_INV,COR_DER,ELVACION,GUION_BAJO,ACENTO;
-terminal String LLAVE_IZQ,OR,LLAVE_DER,VERGULILLA;
-// terminal String COMA,MENOS_GUION,DOBLE_PUNTO,PTCOMA,MAYORQ,LLAVE_IZQ,LLAVE_DER,VERGULILLA,PUNTO,OR,COMILLA_DOBLE,POR;
-terminal String RCONJUNTO;
-// terminal String ENTERO;
-// terminal String LETRAS;
-terminal String TEXTO;
+terminal String RCONJUNTO,SALTO_LINEA,COMILLA_SIMPLE_ESPECIAL,COMILLA_DOBLE_ESPECIAL,flecha,SEPARADOR;
+terminal String EXCLAMACION,COMILLA_DOBLE, NUMERAL,DOLAR,PORCENTAJE,AMPERSAND,COMILLA,PAR_IZQ,PAR_DER;
+terminal String KLEENE,POSITIVA, COMA,GUION,DIV_BARRA,CONCATENACION,DOBLE_PUNTO,PTCOMA,MENOR_QUE,IGUAL,MAYOR_QUE;
+terminal String OPCIONAL,ARROBA,COR_IZQ, BARRA_INV, COR_DER,ELVACION,GUION_BAJO,ACENTO,LLAVE_IZQ,OR,LLAVE_DER,VERGULILLA;
+terminal String ENTERO,LETRA,ID,CADENA;
 
 
-non terminal ini;                                   // terminales para las transiciones 
+non terminal ini;   // terminales para las transiciones
 non terminal lenguaje;
 
 non terminal sentencias;
@@ -53,45 +48,40 @@ non terminal sentencia3;
 
 non terminal conjunto;
 non terminal expresion;
-non terminal caracteres;
-non terminal caracter;
 
 
-// -------------------------------
-
-
-// precedence right POR,PAR_IZQ,PAR_DER; 
-precedence left EXCLAMACION,NUMERAL,DOLAR,PORCENTAJE,AMPERSAND,MENOS_GUION,SALTO,DIV_BARRA,MENORQ,MAYORQ,IGUAL,INTERROGACION,ARROBA,BARRA_INV,ELVACION,GUION_BAJO,ACENTO; 
-precedence left DOBLE_PUNTO,PTCOMA,COMA,VERGULILLA;
-precedence left SEPARADOR,COMILLA,COMILLA_DOBLE;
-// precedencia de operadores 
-precedence left OR,PUNTO,POR,MAS,LLAVE_IZQ,LLAVE_DER,PAR_IZQ,PAR_DER;
+// precedence right POR,PAR_IZQ,PAR_DER;
+precedence left SALTO_LINEA,COMILLA_SIMPLE_ESPECIAL,COMILLA_DOBLE_ESPECIAL,flecha,SEPARADOR;
+precedence left EXCLAMACION,COMILLA_DOBLE,NUMERAL,DOLAR,PORCENTAJE,AMPERSAND,COMILLA;
+precedence left COMA,GUION,DIV_BARRA,DOBLE_PUNTO,PTCOMA,MENOR_QUE,IGUAL,MAYOR_QUE;
+precedence left ARROBA,BARRA_INV,GUION_BAJO,ACENTO,VERGULILLA,ENTERO,LETRA;
+// precedencia de operadores
+precedence left OR,CONCATENACION,OPCIONAL,KLEENE,POSITIVA,LLAVE_IZQ,LLAVE_DER,PAR_IZQ,PAR_DER;
 
 
 
-start with ini;    
+start with ini;
+// GRAMATICAS
 
 ini::=lenguaje;
 
-lenguaje::= LLAVE_IZQ:a sentencias:b LLAVE_DER:c {:System.out.println("SENTENCIAS :" + a + b + c );:}
+lenguaje::= LLAVE_IZQ:a sentencias:b LLAVE_DER:c ;
+
+sentencias ::= sentencia sentencias
+| sentencias2
 ;
 
-sentencias ::= sentencia:a sentencias  {:RESULT=a;/*System.out.println("entro? ")*/;:}
-| sentencias2:a {:RESULT=a;/*sentencia:a sentencias2 */;:}
-
-;
-
-sentencia ::= RCONJUNTO:a DOBLE_PUNTO:b TEXTO:c MENOS_GUION:d MAYORQ:e conjunto:f PTCOMA:g {:System.out.println("El conjunto es: " + a + b + c + d +  e + f + g);:}
-| error:a PTCOMA {:System.out.println("HUBO UN ERROR XDDDDDDDDDDD" + a);:}
+sentencia ::= RCONJUNTO:a DOBLE_PUNTO:b ID:c flecha:d conjunto:e PTCOMA:f  {:System.out.println("El conjunto es: " + a + b + c + d +  e + f);:}
+| error:a PTCOMA 
 ;
 
 
 sentencias2 ::= sentencia2:a sentencias2  {:RESULT=a;/*System.out.println("entro? ")*/;:}
-|sentencia2 SEPARADOR:a SEPARADOR:b sentencias3 {: /*System.out.println("Vino el separador al lado tiene que ir sentencia 3" + a);*/:}
+|sentencia2 SEPARADOR SEPARADOR sentencias3
 ;
 
-sentencia2 ::= TEXTO:a MENOS_GUION:b MAYORQ:c expresion:d PTCOMA:e {:
-System.out.println("la expresion es: " + a + b + c + d +  e);
+sentencia2 ::= ID:a flecha:b  expresion:c PTCOMA:d {:
+System.out.println("la expresion es: " + a + b + c + d);
 Collections.reverse(parser.simbolos);
 ArrayList<String> copia_simbolos = (ArrayList<String>) parser.simbolos.clone();
 
@@ -107,57 +97,47 @@ sentencias3 ::= sentencia3:a sentencias3  {:RESULT=a;/*System.out.println("entro
  | sentencia3:a {:RESULT=a;/*System.out.println("solo una")*/;:}
 ;
 
-sentencia3 ::= TEXTO:a DOBLE_PUNTO:b COMILLA_DOBLE:c TEXTO:d COMILLA_DOBLE:e PTCOMA:f {:System.out.println("La oracion a evaluar es: " + a + b + c + d + e + f);:}
+sentencia3 ::= ID:a DOBLE_PUNTO:b CADENA:c PTCOMA:d{:System.out.println("La oracion a evaluar es: " + a + b + c+d);:}
 
 ;
 
 
-///////////DEFINICION DE CONJUNTOS
+//Definicion de Conjunto
 conjunto ::= conjunto:a COMA conjunto:b {:
 String cadena= (String) a + ",";
 cadena +=(String) b;
 //System.out.println("RECONOCE JUNTO SOLO LO PRIMERO:" +cadena);
 RESULT=cadena;
 :}
-
 |conjunto:a VERGULILLA conjunto:b {:
-String cadena= (String) a + "~";
+String cadena= (String) a + "-";
 cadena +=(String) b;
 RESULT=cadena;
 :}
 
 |EXCLAMACION:a    {:RESULT=a;:}
-|BARRA_INV:a COMILLA_DOBLE:b   {:
-String cadena= (String) a  ;
-cadena +=(String) b;
-RESULT=cadena;:}
-
 |COMILLA_DOBLE:a    {:RESULT=a;:}
 |NUMERAL:a    {:RESULT=a;:}
 |DOLAR:a    {:RESULT=a;:}
 |PORCENTAJE:a    {:RESULT=a;:}
 |AMPERSAND:a    {:RESULT=a;:}
-|BARRA_INV:a COMILLA:b   {:
-String cadena= (String) a  ;
-cadena +=(String) b;
-RESULT=cadena;:}
 |COMILLA:a    {:RESULT=a;:}
 |PAR_IZQ:a    {:RESULT=a;:}
 |PAR_DER:a    {:RESULT=a;:}
-|POR:a    {:RESULT=a;:}
-|MAS:a    {:RESULT=a;:}
+|KLEENE:a    {:RESULT=a;:}
+|POSITIVA:a    {:RESULT=a;:}
 |COMA:a    {:RESULT=a;:}
-|MENOS_GUION:a    {:RESULT=a;:}
-|PUNTO:a    {:RESULT=a;:}
-|SALTO:a    {:RESULT=a;:}
+|GUION:a    {:RESULT=a;:}
 |DIV_BARRA:a    {:RESULT=a;:}
+|CONCATENACION:a    {:RESULT=a;:}
+
 
 |DOBLE_PUNTO:a    {:RESULT=a;:}
 |PTCOMA:a    {:RESULT=a;:}
-|MENORQ:a    {:RESULT=a;:}
+|MENOR_QUE:a    {:RESULT=a;:}
 |IGUAL:a    {:RESULT=a;:}
-|MAYORQ:a    {:RESULT=a;:}
-|INTERROGACION:a    {:RESULT=a;:}
+|MAYOR_QUE:a    {:RESULT=a;:}
+|OPCIONAL:a    {:RESULT=a;:}
 |ARROBA:a    {:RESULT=a;:}
 
 
@@ -173,8 +153,8 @@ RESULT=cadena;:}
 |OR:a    {:RESULT=a;:}
 |LLAVE_DER:a    {:RESULT=a;:}
 |VERGULILLA:a    {:RESULT=a;:}
-
-|TEXTO:a    {:RESULT=a;:}
+|ENTERO:a    {:RESULT=a;:}
+|LETRA:a    {:RESULT=a;:}
 
 
 | error {:System.out.println("TRONO ACA");:}
@@ -182,105 +162,103 @@ RESULT=cadena;:}
 
 //DEFINICION DE EXPRESION simbolo expresion para recursividad
 expresion ::= 
-PUNTO:a expresion:b  {:
+CONCATENACION:a expresion:b  {:
 String cadena= (String) a;
 cadena +=(String) b;
 
-System.out.println("simbolo: " + a);
+// System.out.println("simbolo: " + a);
 parser.simbolos.add((String) a);
 // System.out.println("simbolo b: " + b);
 
 RESULT=cadena;
 :}
+
 | OR:a expresion:b  {:
 String cadena= (String) a;
 cadena +=(String) b;
 
-System.out.println("simbolo a: " + a);
+// System.out.println("simbolo a: " + a);
 parser.simbolos.add((String) a);
 // System.out.println("simbolo b: " + b);
 
 RESULT=cadena;
 :}
-| POR:a expresion:b {:
+
+| KLEENE:a expresion:b {:
 String cadena= (String) a ;
 cadena +=(String) b;
 
-System.out.println("simbolo a: " + a);
+// System.out.println("simbolo a: " + a);
 parser.simbolos.add((String) a);
 // System.out.println("simbolo b: " + b);
 
 RESULT=cadena;
 :}
 
-| INTERROGACION:a expresion:b {:
+| OPCIONAL:a expresion:b {:
 String cadena= (String) a ;
 cadena +=(String) b;
 
-System.out.println("simbolo a: " + a);
+// System.out.println("simbolo a: " + a);
 parser.simbolos.add((String) a);
 // System.out.println("simbolo b: " + b);
 
 RESULT=cadena;
 :}
 
-| MAS:a expresion:b {:
+| POSITIVA:a expresion:b {:
 String cadena= (String) a ;
 cadena +=(String) b;
 
-System.out.println("simbolo a: " + a);
+// System.out.println("simbolo a: " + a);
 parser.simbolos.add((String) a);
 // System.out.println("simbolo b: " + b);
 
 RESULT=cadena;
 :}
 
-|BARRA_INV:a COMILLA_DOBLE:b   expresion:c {:
+|COMILLA_DOBLE_ESPECIAL:a  expresion:b {:
 String cadena= (String) a  ;
 cadena +=(String) b;
-parser.simbolos.add(cadena);
-cadena +=(String) b + (String) c;
-System.out.println("texto: " + cadena);
+parser.simbolos.add(a);
+// System.out.println("texto: " + cadena);
 
 RESULT=cadena;:}
 
-|BARRA_INV:a COMILLA_DOBLE:b   {:
+|COMILLA_DOBLE_ESPECIAL:a   {:
 String cadena= (String) a  ;
-cadena +=(String) b;
-System.out.println("texto: " + cadena);
+// System.out.println("texto: " + cadena);
 parser.simbolos.add(cadena);
 
 RESULT=cadena;:}
 
-|BARRA_INV:a COMILLA:b  expresion:c  {:
+|COMILLA_SIMPLE_ESPECIAL:a  expresion:b  {:
 String cadena= (String) a  ;
 cadena +=(String) b;
-parser.simbolos.add(cadena);
-cadena +=(String) b + (String) c;
-System.out.println("texto: " + cadena);
+parser.simbolos.add(a);
+// System.out.println("texto: " + cadena);
 
 RESULT=cadena;:}
 
-|BARRA_INV:a COMILLA:b   {:
+|COMILLA_SIMPLE_ESPECIAL:a  {:
 String cadena= (String) a  ;
-cadena +=(String) b;
 parser.simbolos.add(cadena);
-System.out.println("texto: " + cadena);
+// System.out.println("texto: " + cadena);
 
 RESULT=cadena;:}
 
 
-|SALTO:a  expresion:c  {:
+|SALTO_LINEA:a  expresion:b  {:
 String cadena= (String) a  ;
-cadena +=(String) c;
+cadena +=(String) b;
 parser.simbolos.add((String) a);
-System.out.println("texto: " + cadena);
+// System.out.println("texto: " + cadena);
 RESULT=cadena;
 
 :}
 
-|SALTO:a    {:
-System.out.println("texto: " + a);
+|SALTO_LINEA:a    {:
+// System.out.println("texto: " + a);
 parser.simbolos.add((String) a);
 RESULT=a;
 
@@ -288,144 +266,47 @@ RESULT=a;
 
 
 
-| COMILLA_DOBLE caracteres:a COMILLA_DOBLE expresion:b {:
-String cadena= (String) a  ;
+| CADENA:a expresion:b {:
+String cadena= (String) a.replace("\"", "")  ;
 cadena +=(String) b;
 // System.out.println("esto me manda la cadena"+ cadena);
 
-System.out.println("caracteres primero: " + a);
-parser.simbolos.add((String) a + "§");
+// System.out.println("caracteres primero: " + a);
+parser.simbolos.add((String) a.replace("\"", "") + "§");
 // System.out.println("simbolo b: " + b);
 
 RESULT=cadena;
 :}
 
-| COMILLA_DOBLE caracteres:a COMILLA_DOBLE  {:
+| CADENA:a  {:
 // System.out.println("esto me manda"+a);
-System.out.println("caracteres primero solo: " + a);
-parser.simbolos.add((String) a + "§");
+// System.out.println("caracteres primero solo: " + a);
+parser.simbolos.add((String) a.replace("\"", "") + "§");
 RESULT=a;
 
 :}
 
-| COMILLA_DOBLE COMILLA_DOBLE expresion:b {:
-String cadena= "espacio" + (String) b  ;
-
-// System.out.println("esto me manda la cadena"+ cadena);
-
-System.out.println("biene espacio: " + "espacio");
-parser.simbolos.add("espacio");
-// System.out.println("simbolo b: " + b);
-
-RESULT=cadena;
-:}
-
-| COMILLA_DOBLE COMILLA_DOBLE{:
-String cadena= "espacio" ;
-
-// System.out.println("esto me manda la cadena"+ cadena);
-
-System.out.println("biene espacio: " + "espacio");
-parser.simbolos.add("espacio");
-// System.out.println("simbolo b: " + b);
-
-RESULT=cadena;
-:}
-
-
-| LLAVE_IZQ:a TEXTO:b LLAVE_DER:c expresion:d{:
+| LLAVE_IZQ:a ID:b LLAVE_DER:c expresion:d{:
 String cadena= (String) a ;
 cadena +=(String) b+(String) c+(String) d;
 //System.out.println("a es: " +a + "b es: " + b + "c es: "+ "d es: " + d);
-System.out.println("texto: " + b);
+// System.out.println("texto: " + b);
 parser.simbolos.add((String) b);
 
 RESULT=cadena;
 :}
 
-| LLAVE_IZQ:a TEXTO:b LLAVE_DER:c {:
+| LLAVE_IZQ:a ID:b LLAVE_DER:c {:
 String cadena= (String) a ;
 
 cadena +=(String) b+(String) c;
 //System.out.println("a es: " +a + "b es: " + b + "c es: " + c);
 
-System.out.println("texto: " + b);
+// System.out.println("texto: " + b);
 parser.simbolos.add((String) b);
 
 /*---------*/
 RESULT=cadena;
 :}
-
-
-
-
-
-
-
-
-
 ;
 
-// aca puedo meter los \~ asi los caracteres para qu elos reconozca
-caracteres ::= caracter:a caracteres:b {:
-String cadena= (String) a  ;
-cadena +=(String) b;
-RESULT=cadena;
-// System.out.println("caracteres doble: " + a);
-:}
-|caracter:a {:RESULT=a;
-// System.out.println("caracteres: " + a);
-:}
-;
-
-
-// comila doble debe de ir con \, y tambien comilla normal con  \
-caracter::= TEXTO:a {:RESULT=a;:}
-|EXCLAMACION:a  {:RESULT=a;:}
-|BARRA_INV:a COMILLA_DOBLE:b   {:
-String cadena= (String) a  ;
-cadena +=(String) b;
-RESULT=cadena;:}
-
-
-
-|NUMERAL:a    {:RESULT=a;:}
-|DOLAR:a    {:RESULT=a;:}
-|PORCENTAJE:a    {:RESULT=a;:}
-|AMPERSAND:a    {:RESULT=a;:}
-|BARRA_INV:a COMILLA:b   {:
-String cadena= (String) a  ;
-cadena +=(String) b;
-RESULT=cadena;:}
-|COMILLA:a  {:RESULT=a;:}
-|PAR_IZQ:a    {:RESULT=a;:}
-|PAR_DER:a    {:RESULT=a;:}
-|POR:a    {:RESULT=a;:}
-|MAS:a    {:RESULT=a;:}
-|COMA:a    {:RESULT=a;:}
-|MENOS_GUION:a    {:RESULT=a;:}
-|PUNTO:a    {:RESULT=a;:}
-|SALTO:a    {:RESULT=a;:}
-|DIV_BARRA:a    {:RESULT=a;:}
-
-|DOBLE_PUNTO:a    {:RESULT=a;:}
-|PTCOMA:a    {:RESULT=a;:}
-|MENORQ:a    {:RESULT=a;:}
-|IGUAL:a    {:RESULT=a;:}
-|MAYORQ:a    {:RESULT=a;:}
-|INTERROGACION:a    {:RESULT=a;:}
-|ARROBA:a    {:RESULT=a;:}
-
-|COR_IZQ:a    {:RESULT=a;:}
-|BARRA_INV:a    {:RESULT=a;:}
-|COR_DER:a    {:RESULT=a;:}
-|ELVACION:a    {:RESULT=a;:}
-|GUION_BAJO:a    {:RESULT=a;:}
-|ACENTO:a    {:RESULT=a;:}
-
-|LLAVE_IZQ:a    {:RESULT=a;:}
-|OR:a    {:RESULT=a;:}
-|LLAVE_DER:a    {:RESULT=a;:}
-|VERGULILLA:a    {:RESULT=a;:}
-
-;

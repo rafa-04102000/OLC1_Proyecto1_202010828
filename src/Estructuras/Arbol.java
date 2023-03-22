@@ -48,7 +48,19 @@ public class Arbol {
             r= "node" + i + "[label = \" "+ nodo.getPrimeraPos()+ "|" +"{"+nodo.getAnulable()+"|"+ " \\" + nodoTerm +"|"+"--"+ "}"+"|"+nodo.getUltimaPos()+ "\"];\n";
  
         }else{
-            r= "node" + i + "[label = \" "+ nodo.getPrimeraPos()+ "|" +"{"+nodo.getAnulable()+"|"+ nodoTerm +"|"+"--"+ "}"+"|"+nodo.getUltimaPos()+ "\"];\n";
+            String modificacion = "";
+            if(nodoTerm.equals("\\n") || nodoTerm.equals("\\\"") || nodoTerm.equals("\\\'") || nodoTerm.equals("\\")){
+                if (nodoTerm.equals("\\\"")){
+                    modificacion = "\\\\"+nodoTerm;
+                }else{
+                    modificacion = "\\"+nodoTerm;
+                }
+                r= "node" + i + "[label = \" "+ nodo.getPrimeraPos()+ "|" +"{"+nodo.getAnulable()+"|"+ modificacion +"|"+"--"+ "}"+"|"+nodo.getUltimaPos()+ "\"];\n";
+            }else{                
+                r= "node" + i + "[label = \" "+ nodo.getPrimeraPos()+ "|" +"{"+nodo.getAnulable()+"|"+ nodoTerm +"|"+"--"+ "}"+"|"+nodo.getUltimaPos()+ "\"];\n";
+            }
+            
+            
         }
         
         for(int j =0 ; j<=nodo.hijos.size()-1; j++){

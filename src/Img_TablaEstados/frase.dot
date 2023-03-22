@@ -40,13 +40,12 @@ nodo1 [ label = <
 
 <td bgcolor="#F2DC01">digito</td>
 
-<td bgcolor="#F2DC01">espacio</td>
+<td bgcolor="#F2DC01"> </td>
 
 </tr>
 
 <tr>
-<td>s0[
-Transicion{origen=s0, destino=s1, entrada=C}]</td>
+<td>s0[1]</td>
 <td>s1</td>
 <td>---</td>
 <td>---</td>
@@ -58,8 +57,7 @@ Transicion{origen=s0, destino=s1, entrada=C}]</td>
 <td>---</td>
 </tr>
 <tr>
-<td>s1[
-Transicion{origen=s1, destino=s2, entrada=O}]</td>
+<td>s1[2]</td>
 <td>---</td>
 <td>s2</td>
 <td>---</td>
@@ -71,8 +69,7 @@ Transicion{origen=s1, destino=s2, entrada=O}]</td>
 <td>---</td>
 </tr>
 <tr>
-<td>s2[
-Transicion{origen=s2, destino=s3, entrada=M}]</td>
+<td>s2[3]</td>
 <td>---</td>
 <td>---</td>
 <td>s3</td>
@@ -84,8 +81,7 @@ Transicion{origen=s2, destino=s3, entrada=M}]</td>
 <td>---</td>
 </tr>
 <tr>
-<td>s3[
-Transicion{origen=s3, destino=s4, entrada=P}]</td>
+<td>s3[4]</td>
 <td>---</td>
 <td>---</td>
 <td>---</td>
@@ -97,8 +93,7 @@ Transicion{origen=s3, destino=s4, entrada=P}]</td>
 <td>---</td>
 </tr>
 <tr>
-<td>s4[
-Transicion{origen=s4, destino=s5, entrada=I}]</td>
+<td>s4[5]</td>
 <td>---</td>
 <td>---</td>
 <td>---</td>
@@ -110,8 +105,7 @@ Transicion{origen=s4, destino=s5, entrada=I}]</td>
 <td>---</td>
 </tr>
 <tr>
-<td>s5[
-Transicion{origen=s5, destino=s6, entrada=1}]</td>
+<td>s5[6]</td>
 <td>---</td>
 <td>---</td>
 <td>---</td>
@@ -123,10 +117,7 @@ Transicion{origen=s5, destino=s6, entrada=1}]</td>
 <td>---</td>
 </tr>
 <tr>
-<td>s6[
-Transicion{origen=s6, destino=s6, entrada=letra}, 
-Transicion{origen=s6, destino=s6, entrada=digito}, 
-Transicion{origen=s6, destino=s6, entrada=espacio}]</td>
+<td>s6[7, 8, 9, 10]</td>
 <td>---</td>
 <td>---</td>
 <td>---</td>
@@ -141,7 +132,7 @@ Transicion{origen=s6, destino=s6, entrada=espacio}]</td>
 
 	LKD [
 fontsize = 20,
-label = "Tabla de transiciones: frase ",
+label = "Tabla de transiciones: frase",
 shape = plain,
 style = ""]
 

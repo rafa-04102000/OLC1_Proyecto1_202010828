@@ -32,7 +32,7 @@ nodo1 [label=<
 
  <tr>  <td >digito</td><td>8</td><td>[7, 8, 9, 10]</td></tr>
 
- <tr>  <td >espacio</td><td>9</td><td>[7, 8, 9, 10]</td></tr>
+ <tr>  <td > </td><td>9</td><td>[7, 8, 9, 10]</td></tr>
 
  <tr>  <td >#</td><td>10</td><td>[]</td></tr>
 
@@ -40,7 +40,7 @@ nodo1 [label=<
 
 	LKD [
 fontsize = 20,
-label = "Tabla de siguientes: frase ",
+label = "Tabla de siguientes: frase",
 shape = plain,
 style = ""]
 

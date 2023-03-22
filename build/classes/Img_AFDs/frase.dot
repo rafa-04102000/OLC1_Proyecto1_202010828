@@ -30,7 +30,7 @@ s6->s6[label = "letra"];
 
 s6->s6[label = "digito"];
 
-s6->s6[label = "espacio"];
+s6->s6[label = " "];
 
 afd [ 
 
@@ -38,7 +38,7 @@ fillcolor="#ff880022"
 
 label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="18"> 
 
-<tr> <td> <b>Nombre AFD: frase </b> </td> </tr> 
+<tr> <td> <b>Nombre AFD: frase</b> </td> </tr> 
 
 </table>> 
 
