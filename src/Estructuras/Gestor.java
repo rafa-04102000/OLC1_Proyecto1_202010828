@@ -25,6 +25,10 @@ public class Gestor {
     ArrayList<Estado> verificar;
     int numeroAceptacion;
     
+    //variables para la cracion de transiciones de AFND
+    int numeroDeEstado;
+    ArrayList<Transicion> transiciones;
+    
     public Gestor(){
         this.pila = new Stack<Nodo>(); //aca junto todo lo que este junto 
         //this.vinoRegla = false;
@@ -37,6 +41,10 @@ public class Gestor {
         this.listaEstados = new ArrayList<Estado>();        
         this.verificar = new ArrayList<Estado>();
         this.numeroAceptacion = 0;
+        
+        //variables para la cracion de transiciones de AFND
+        this.numeroDeEstado = 0;
+        this.transiciones = new ArrayList<Transicion>();
     }
     
     
@@ -44,7 +52,7 @@ public Nodo regresarRaiz(ArrayList<String> expresion){
     //contar los no anulables
     int cont = 0;
     for (String sim:expresion){
-        System.out.println("este es el simobo " + sim);
+        //System.out.println("este es el simobo " + sim);
         if (!sim.equals("|") && !sim.equals("*") && !sim.equals("+") && !sim.equals("?") && !sim.equals(".")){
             cont ++;
            // System.out.println("esto sumo " + cont);
@@ -71,15 +79,15 @@ public Nodo regresarRaiz(ArrayList<String> expresion){
     this.posicion = 0;
     // empiezo la tabla de siguientes
    Collections.sort(this.siguientes);
-   if (this.siguientes.isEmpty()){
+   /*if (this.siguientes.isEmpty()){
        System.out.println("Esta vacio");
    }else{
        System.out.println("No esta vacio que pex");
-   }
+   }*/
    
-    for (Siguiente proximo: this.siguientes){
+    /*for (Siguiente proximo: this.siguientes){
         System.out.println(proximo.toString());
-    }
+    }*/
     
     
     this.estados(raiz);
@@ -470,7 +478,7 @@ public void estados(Nodo incio){
                 break;
             }
         }
-        System.out.println("El nodo i = " + valor + ": , su lexema es " + lexema + "\n");
+       // System.out.println("El nodo i = " + valor + ": , su lexema es " + lexema + "\n");
         
         for (int valor2:copiaConjunto ){
             for (Siguiente sig: this.siguientes){
@@ -489,9 +497,9 @@ public void estados(Nodo incio){
         
         if (!nuevoConjunto.isEmpty()){
             Collections.sort(nuevoConjunto);
-            System.out.println("El nuevo conjunto armado para el siguente de el nodo con el lexema " + lexema + " es");
+            /*System.out.println("El nuevo conjunto armado para el siguente de el nodo con el lexema " + lexema + " es");
             System.out.println(nuevoConjunto);
-            System.out.println("\n");
+            System.out.println("\n");*/
             
             // veo si el conjunto nuevo es igual al del estado que estoy evaluando
             if (copiaConjunto.equals(nuevoConjunto)){
@@ -545,24 +553,24 @@ public void estados(Nodo incio){
     }
     
     this.listaEstados.add(trabajando);
-    System.out.println("estado mas sus transiciones -----");
+   /* System.out.println("estado mas sus transiciones -----");
     System.out.println(trabajando.toString());
-    System.out.println("los demas estados para verificar");
+    System.out.println("los demas estados para verificar");*/
     for(Estado l:this.verificar){
        System.out.println(l.toString());
     }
-    System.out.println("\n");
+   // System.out.println("\n");
     this.hacerEstados();
 
     
-    System.out.println("\nDESPUES DEL ANALISIS ESTOS SON LOS ESTADOS");
+    /*System.out.println("\nDESPUES DEL ANALISIS ESTOS SON LOS ESTADOS");
     System.out.println("En la lista de verificar tengo ");    
     System.out.println(this.verificar.size() + " estados por analizar ");
     System.out.println("Mis estados en la lista de los que ya analize son \n");
     for (Estado analizado:this.listaEstados){
             System.out.println(analizado.toString()+"\n");
     }
-
+*/
 
     
 
@@ -574,26 +582,26 @@ public void estados(Nodo incio){
 
 
 public boolean hacerEstados(){
-    System.out.println("Esto es lo que hay en la lista Verificar " );
+    /*System.out.println("Esto es lo que hay en la lista Verificar " );
     System.out.println(this.verificar);
-    System.out.println("\n");
+    System.out.println("\n");*/
     
     Estado trabajando = this.verificar.get(0);
     this.verificar.remove(0);    
-    System.out.println("Esto es lo que hay en la lista Verificar despues de borrar la posicion 0 " );
+    /*System.out.println("Esto es lo que hay en la lista Verificar despues de borrar la posicion 0 " );
     System.out.println(this.verificar);
-    System.out.println("\n");
+    System.out.println("\n");*/
     
     
     
-    System.out.println("Esto es lo que hay en el estado que estoy trabajando " );
+    /*System.out.println("Esto es lo que hay en el estado que estoy trabajando " );
     System.out.println(trabajando);
     System.out.println("Esto es el conjunto del estado que trabajo" );
     System.out.println(trabajando.getConjunto());
-    System.out.println("Este es el conjutno copiado de mi estado actual" );
+    System.out.println("Este es el conjutno copiado de mi estado actual" );*/
     ArrayList<Integer> copiaConjunto = (ArrayList<Integer>) trabajando.getConjunto().clone();
-    System.out.println(copiaConjunto);
-    System.out.println("\n");
+    /*System.out.println(copiaConjunto);
+    System.out.println("\n");*/
 
     ArrayList<String> valoresLexemas = new ArrayList<String>();
     
@@ -606,7 +614,7 @@ public boolean hacerEstados(){
                 break;
             }
         }
-        System.out.println("El nodo i = " + valor + ": , su lexema es " + lexema + "\n");
+       // System.out.println("El nodo i = " + valor + ": , su lexema es " + lexema + "\n");
         
         for (int valor2:copiaConjunto ){
             for (Siguiente sig: this.siguientes){
@@ -625,9 +633,9 @@ public boolean hacerEstados(){
         
         if (!nuevoConjunto.isEmpty()){
             Collections.sort(nuevoConjunto);
-            System.out.println("El nuevo conjunto armado para el siguente de el nodo con el lexema " + lexema + " es");
+            /*System.out.println("El nuevo conjunto armado para el siguente de el nodo con el lexema " + lexema + " es");
             System.out.println(nuevoConjunto);
-            System.out.println("\n");
+            System.out.println("\n");*/
             
             // veo si el conjunto nuevo es igual al del estado que estoy evaluando
             if (copiaConjunto.equals(nuevoConjunto)){
@@ -684,7 +692,7 @@ public boolean hacerEstados(){
     
     
     if (!this.verificar.isEmpty()){
-        System.out.println("sigo con otra vuelta");
+        //System.out.println("sigo con otra vuelta");
         this.hacerEstados();
     }else{
         System.out.println("no tengo nada mas que verificar");
@@ -703,6 +711,227 @@ public ArrayList<Estado> regresarListaEstados() {
     this.numeroAceptacion = 0;
 
     return copiaEstados;
+}
+
+
+
+public void generarAFND(Nodo nodoRaiz){
+    Nodo inicio = nodoRaiz;
+    
+    
+    Nodo hijoIzquierdo = inicio.hijos.get(0);
+    
+    System.out.println("Nombre -> "+ hijoIzquierdo.getLexema());    
+    System.out.println("Tipo -> "+ hijoIzquierdo.getTipo());
+
+    
+    if (hijoIzquierdo.getToken().equals(".") && hijoIzquierdo.getTipo().equals("operador")){
+        
+        Nodo iz = hijoIzquierdo.hijos.get(0);
+        
+        if(iz.getTipo().equals("simbolo")){
+            Transicion nT = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),iz.getToken());
+            this.transiciones.add(nT);
+            this.numeroDeEstado++;
+        }else if(iz.getTipo().equals("operador")){
+          agregarEstadoAFND(iz);  
+        }
+        //int dondeSeQuedo = this.numeroDeEstado;
+        
+        Nodo der = hijoIzquierdo.hijos.get(1);
+        if(der.getTipo().equals("simbolo")){
+            Transicion nT2 = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),der.getToken());
+            this.transiciones.add(nT2);
+            this.numeroDeEstado++;
+        }else if(der.getTipo().equals("operador")){
+          agregarEstadoAFND(der);  
+        }
+        
+    }else if(hijoIzquierdo.getToken().equals("|") && hijoIzquierdo.getTipo().equals("operador")){
+        
+        String raizNodoOR = "s"+this.numeroDeEstado;
+        
+        Nodo iz = hijoIzquierdo.hijos.get(0);
+        Transicion nT1 = new Transicion(raizNodoOR,"s"+(this.numeroDeEstado+1),"ε");
+        this.transiciones.add(nT1);
+        this.numeroDeEstado++;       
+
+        String estadoApartadoParaUnir = "";
+        if(iz.getTipo().equals("simbolo")){
+            Transicion nT = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),iz.getToken());
+            this.transiciones.add(nT);
+            this.numeroDeEstado++;
+            Transicion vacia = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),"ε");
+            this.transiciones.add(vacia);
+            this.numeroDeEstado++;
+            estadoApartadoParaUnir = "s"+this.numeroDeEstado;
+            //this.numeroDeEstado++;
+        }else if(iz.getTipo().equals("operador")){
+          agregarEstadoAFND(iz);  
+          int ultima = this.transiciones.size()-1;
+          Transicion res = this.transiciones.get(ultima);
+          Transicion vacia3 = new Transicion(res.destino,"s"+(this.numeroDeEstado+1),"ε");
+          this.numeroDeEstado++;
+          this.transiciones.add(vacia3);
+          estadoApartadoParaUnir = "s"+this.numeroDeEstado;
+        }
+        
+        
+        Nodo der = hijoIzquierdo.hijos.get(1);
+        Transicion nT2 = new Transicion(raizNodoOR,"s"+(this.numeroDeEstado+1),"ε");
+        this.transiciones.add(nT2);
+        this.numeroDeEstado++;
+        if(der.getTipo().equals("simbolo")){
+            Transicion nT22 = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),der.getToken());
+            this.transiciones.add(nT22);
+            this.numeroDeEstado++;
+            Transicion vacia2 = new Transicion("s"+this.numeroDeEstado,estadoApartadoParaUnir,"ε");
+            this.transiciones.add(vacia2);
+
+        }else if(der.getTipo().equals("operador")){
+          agregarEstadoAFND(der);  
+          int ultima = this.transiciones.size()-1;
+          Transicion res = this.transiciones.get(ultima);
+          Transicion vacia3 = new Transicion(res.destino,estadoApartadoParaUnir,"ε");
+          this.transiciones.add(vacia3);
+   
+        }
+        
+        
+        
+    }else if(hijoIzquierdo.getToken().equals("*") && hijoIzquierdo.getTipo().equals("operador")){
+        
+    }else if(hijoIzquierdo.getToken().equals("+") && hijoIzquierdo.getTipo().equals("operador")){
+        
+    }else if(hijoIzquierdo.getToken().equals("?") && hijoIzquierdo.getTipo().equals("operador")){
+        
+    }
+    
+    for(Transicion t:this.transiciones){
+        System.out.println(""+t.origen+"->"+t.destino+"[label ="+"\""+t.entrada+"\"]");
+        //System.out.println(t.toString());
+    }
+    
+}
+
+
+
+public void agregarEstadoAFND(Nodo nodo){
+    
+    
+    if (nodo.getToken().equals(".") && nodo.getTipo().equals("operador")){
+        
+         Nodo iz = nodo.hijos.get(0);
+        
+        if(iz.getTipo().equals("simbolo")){
+            Transicion nT = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),iz.getToken());
+            this.transiciones.add(nT);
+            this.numeroDeEstado++;
+        }else if(iz.getTipo().equals("operador")){
+          agregarEstadoAFND(iz);  
+        }
+        //int dondeSeQuedo = this.numeroDeEstado;
+        
+        Nodo der = nodo.hijos.get(1);
+        if(der.getTipo().equals("simbolo")){
+            Transicion nT2 = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),der.getToken());
+            this.transiciones.add(nT2);
+            this.numeroDeEstado++;
+        }else if(der.getTipo().equals("operador")){
+          agregarEstadoAFND(der);  
+        }
+
+
+        
+    }else if(nodo.getToken().equals("|") && nodo.getTipo().equals("operador")){
+        
+        String raizNodoOR = "s"+this.numeroDeEstado;
+        
+        Nodo iz = nodo.hijos.get(0);
+        Transicion nT1 = new Transicion(raizNodoOR,"s"+(this.numeroDeEstado+1),"ε");
+        this.transiciones.add(nT1);
+        this.numeroDeEstado++;       
+
+        String estadoApartadoParaUnir = "";
+        if(iz.getTipo().equals("simbolo")){
+            Transicion nT = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),iz.getToken());
+            this.transiciones.add(nT);
+            this.numeroDeEstado++;
+            Transicion vacia = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),"ε");
+            this.transiciones.add(vacia);
+            this.numeroDeEstado++;
+            estadoApartadoParaUnir = "s"+this.numeroDeEstado;
+            //this.numeroDeEstado++;
+        }else if(iz.getTipo().equals("operador")){
+          agregarEstadoAFND(iz);  
+          int ultima = this.transiciones.size()-1;
+          Transicion res = this.transiciones.get(ultima);
+          Transicion vacia3 = new Transicion(res.destino,"s"+(this.numeroDeEstado+1),"ε");
+          this.numeroDeEstado++;
+          this.transiciones.add(vacia3);
+          estadoApartadoParaUnir = "s"+this.numeroDeEstado;
+        }
+        
+        
+        Nodo der = nodo.hijos.get(1);
+        Transicion nT2 = new Transicion(raizNodoOR,"s"+(this.numeroDeEstado+1),"ε");
+        this.transiciones.add(nT2);
+        this.numeroDeEstado++;
+        if(der.getTipo().equals("simbolo")){
+            Transicion nT22 = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),der.getToken());
+            this.transiciones.add(nT22);
+            this.numeroDeEstado++;
+            Transicion vacia2 = new Transicion("s"+this.numeroDeEstado,estadoApartadoParaUnir,"ε");
+            this.transiciones.add(vacia2);
+
+        }else if(der.getTipo().equals("operador")){
+          agregarEstadoAFND(der);  
+          int ultima = this.transiciones.size()-1;
+          Transicion res = this.transiciones.get(ultima);
+          Transicion vacia3 = new Transicion(res.destino,estadoApartadoParaUnir,"ε");
+          this.transiciones.add(vacia3);
+   
+        }
+        
+    }else if(nodo.getToken().equals("*") && nodo.getTipo().equals("operador")){
+        
+                
+
+        
+        
+    }else if(nodo.getToken().equals("+") && nodo.getTipo().equals("operador")){
+        
+        Nodo unico = nodo.hijos.get(0);
+        
+        String transicionRegresar = "";
+        if(unico.getTipo().equals("simbolo")){
+            Transicion vacia1 = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),"ε");
+            this.transiciones.add(vacia1);
+            this.numeroDeEstado++;
+            
+            transicionRegresar = "s"+this.numeroDeEstado;
+            
+            
+            Transicion nT = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),unico.getToken());
+            this.transiciones.add(nT);
+            this.numeroDeEstado++;
+            
+            Transicion regresar = new Transicion("s"+this.numeroDeEstado,transicionRegresar,"ε");
+            this.transiciones.add(regresar);
+            
+            Transicion vacia2 = new Transicion("s"+this.numeroDeEstado,"s"+(this.numeroDeEstado+1),"ε");
+            this.transiciones.add(vacia2);
+            this.numeroDeEstado++;
+            
+        }else if(unico.getTipo().equals("operador")){
+          agregarEstadoAFND(unico);  
+        }
+
+        
+    }else if(nodo.getToken().equals("?") && nodo.getTipo().equals("operador")){
+        
+    }
+    
 }
     
 }

@@ -86,7 +86,7 @@ public class Arbol {
         FileWriter fichero = null;
         try {
             
-            fichero = new FileWriter("src\\Img_Arboles\\"+this.nombre+".dot");
+            fichero = new FileWriter("src\\ARBOLES_202010828\\"+this.nombre+".dot");
             PrintWriter pw = null;
             pw = new PrintWriter(fichero);
             System.out.println(cadena);
@@ -95,7 +95,7 @@ public class Arbol {
             try {
 
                 ProcessBuilder proceso;
-                proceso = new ProcessBuilder("dot", "-Tjpg", "-o", "src\\Img_Arboles\\"+this.nombre+".jpg", "src\\Img_Arboles\\"+this.nombre+".dot");
+                proceso = new ProcessBuilder("dot", "-Tjpg", "-o", "src\\ARBOLES_202010828\\"+this.nombre+".jpg", "src\\ARBOLES_202010828\\"+this.nombre+".dot");
                 proceso.start();
 
             } catch (Exception e) {

@@ -43,7 +43,11 @@ public class Nodo {
         this.ultimaPos = new ArrayList<Integer>();
         this.tipo = null;
     }
-    
+
+    public String getLexema() {
+        return lexema;
+    }
+
     
     public String getToken(){
         return token;
@@ -88,6 +92,11 @@ public class Nodo {
         return tipo;
     }
 
+    
+    public void setLexema(String lexema) {
+        this.lexema = lexema;
+    }
+    
 
     public void setPrimeraPos(ArrayList<Integer> primeraPos) {
         this.primeraPos = primeraPos;

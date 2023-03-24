@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import Analizador.parser;
 import Analizador.scanner;
+import Errores.Excepcion;
 
 import Estructuras.ExpresionRG;
 import Estructuras.Gestor;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 public class Inicio extends javax.swing.JFrame {
@@ -38,7 +40,7 @@ public class Inicio extends javax.swing.JFrame {
     Gestor gestor;
     int contadorIMG;
     String tipoGraficas;
-    
+    String rutaArchivo;
     //ESTE ES EL CONSTRUCTOR
     
     
@@ -53,7 +55,7 @@ public class Inicio extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.contadorIMG = 0;
         this.tipoGraficas = "";
-        
+        this.rutaArchivo = "";
         //aca solo para que se vea bien el abrir archivo
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -191,9 +193,19 @@ public class Inicio extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Guardar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Guardar Como");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -292,7 +304,9 @@ public class Inicio extends javax.swing.JFrame {
        
        if(archivo != null){
            System.out.print(archivo.getAbsolutePath());
-           
+           this.rutaArchivo = archivo.getAbsolutePath();
+           System.out.print(this.rutaArchivo);
+
            String texto = "";
            
            try {
@@ -387,6 +401,8 @@ public class Inicio extends javax.swing.JFrame {
                         Graficas grafica = new Graficas(ex.getSiguientes(),ex.getEstados(),ex.getNombre());
                         ex.setGraficas(grafica);
                         ex.graficar();
+                        
+                        //this.gestor.generarAFND(raiz);
 
 
                     }
@@ -408,9 +424,17 @@ public class Inicio extends javax.swing.JFrame {
 
 
             } else {
-                scanner.erroresLexicos.forEach((error) -> {
+                String erroresLexicos = "";
+                for (Excepcion ex:scanner.erroresLexicos){
+                    erroresLexicos +="Error: "+ex.getTipo() + " | " + ex.getDescripcion() + "| " + ex.getLinea() + "| " + ex.getColumna()+"\n";
+                }
+                /*scanner.erroresLexicos.forEach((error) -> {
+                    erroresLexicos += "Error: "+error.getTipo();
                     Consola.setText("Error: "+error.getTipo() + " | " + error.getDescripcion() + "| " + error.getLinea() + "| " + error.getColumna());
-                });
+                });*/
+                Consola.setText(erroresLexicos);
+                Graficas mostrarErrores = new Graficas();
+                mostrarErrores.reporteErrores(scanner.erroresLexicos);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -438,24 +462,24 @@ public class Inicio extends javax.swing.JFrame {
     private void MostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MostrarActionPerformed
        if (Seleccionar.getSelectedItem().equals("Árboles")){   
 
-           ImageIcon im = new ImageIcon("src\\Img_Arboles\\"+this.expresiones.get(0).getNombre()+".jpg");
+           ImageIcon im = new ImageIcon("src\\ARBOLES_202010828\\"+this.expresiones.get(0).getNombre()+".jpg");
            Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
            Imagen.setIcon(i);
            this.tipoGraficas = "Árboles";
           /* ImageIcon nuevaImagen = new ImageIcon("src\\Img_Arboles\\"+this.expresiones.get(0).getNombre()+".jpg");
            Imagen.setIcon(nuevaImagen);*/
        }else if(Seleccionar.getSelectedItem().equals("Siguientes")){
-           ImageIcon im = new ImageIcon("src\\Img_TablaSiguientes\\"+this.expresiones.get(0).getNombre()+".jpg");
+           ImageIcon im = new ImageIcon("src\\SIGUIENTES_202010828\\"+this.expresiones.get(0).getNombre()+".jpg");
            Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
            Imagen.setIcon(i);
            this.tipoGraficas = "Siguientes";
        }else if(Seleccionar.getSelectedItem().equals("Transiciones")){
-           ImageIcon im = new ImageIcon("src\\Img_TablaEstados\\"+this.expresiones.get(0).getNombre()+".jpg");
+           ImageIcon im = new ImageIcon("src\\TRANSICIONES_202010828\\"+this.expresiones.get(0).getNombre()+".jpg");
            Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
            Imagen.setIcon(i);
            this.tipoGraficas = "Transiciones";
        }else if(Seleccionar.getSelectedItem().equals("Autómatas")){
-           ImageIcon im = new ImageIcon("src\\Img_AFDs\\"+this.expresiones.get(0).getNombre()+".jpg");
+           ImageIcon im = new ImageIcon("src\\AFD_202010828\\"+this.expresiones.get(0).getNombre()+".jpg");
            Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
            Imagen.setIcon(i);
            this.tipoGraficas = "Autómatas";
@@ -472,12 +496,12 @@ public class Inicio extends javax.swing.JFrame {
             
             if(this.contadorIMG==0){
                 this.contadorIMG = this.expresiones.size()-1;
-                ImageIcon im = new ImageIcon("src\\Img_Arboles\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\ARBOLES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG--;
-                ImageIcon im = new ImageIcon("src\\Img_Arboles\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\ARBOLES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
@@ -485,12 +509,12 @@ public class Inicio extends javax.swing.JFrame {
         }else if(this.tipoGraficas.equals("Siguientes")){
             if(this.contadorIMG==0){
                 this.contadorIMG = this.expresiones.size()-1;
-                ImageIcon im = new ImageIcon("src\\Img_TablaSiguientes\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\SIGUIENTES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG--;
-                ImageIcon im = new ImageIcon("src\\Img_TablaSiguientes\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\SIGUIENTES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
@@ -498,12 +522,12 @@ public class Inicio extends javax.swing.JFrame {
         }else if(this.tipoGraficas.equals("Transiciones")){
             if(this.contadorIMG==0){
                 this.contadorIMG = this.expresiones.size()-1;
-                ImageIcon im = new ImageIcon("src\\Img_TablaEstados\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\TRANSICIONES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG--;
-                ImageIcon im = new ImageIcon("src\\Img_TablaEstados\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\TRANSICIONES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
@@ -511,12 +535,12 @@ public class Inicio extends javax.swing.JFrame {
         }else if(this.tipoGraficas.equals("Autómatas")){
             if(this.contadorIMG==0){
                 this.contadorIMG = this.expresiones.size()-1;
-                ImageIcon im = new ImageIcon("src\\Img_AFDs\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\AFD_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG--;
-                ImageIcon im = new ImageIcon("src\\Img_AFDs\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\AFD_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
@@ -529,12 +553,12 @@ public class Inicio extends javax.swing.JFrame {
             
             if(this.contadorIMG==this.expresiones.size()-1){
                 this.contadorIMG = 0;
-                ImageIcon im = new ImageIcon("src\\Img_Arboles\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\ARBOLES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG++;
-                ImageIcon im = new ImageIcon("src\\Img_Arboles\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\ARBOLES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
@@ -542,12 +566,12 @@ public class Inicio extends javax.swing.JFrame {
         }else if(this.tipoGraficas.equals("Siguientes")){
             if(this.contadorIMG==this.expresiones.size()-1){
                 this.contadorIMG = 0;
-                ImageIcon im = new ImageIcon("src\\Img_TablaSiguientes\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\SIGUIENTES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG++;
-                ImageIcon im = new ImageIcon("src\\Img_TablaSiguientes\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\SIGUIENTES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
@@ -555,12 +579,12 @@ public class Inicio extends javax.swing.JFrame {
         }else if(this.tipoGraficas.equals("Transiciones")){
             if(this.contadorIMG==this.expresiones.size()-1){
                 this.contadorIMG = 0;
-                ImageIcon im = new ImageIcon("src\\Img_TablaEstados\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\TRANSICIONES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG++;
-                ImageIcon im = new ImageIcon("src\\Img_TablaEstados\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\TRANSICIONES_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
@@ -568,18 +592,79 @@ public class Inicio extends javax.swing.JFrame {
         }else if(this.tipoGraficas.equals("Autómatas")){
             if(this.contadorIMG==this.expresiones.size()-1){
                 this.contadorIMG = 0;
-                ImageIcon im = new ImageIcon("src\\Img_AFDs\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\AFD_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }else{
                 this.contadorIMG++;
-                ImageIcon im = new ImageIcon("src\\Img_AFDs\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
+                ImageIcon im = new ImageIcon("src\\AFD_202010828\\"+this.expresiones.get(this.contadorIMG).getNombre()+".jpg");
                 Icon i = new ImageIcon(im.getImage().getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_DEFAULT));
                 Imagen.setIcon(i);
             }
             
         }
     }//GEN-LAST:event_bsiguienteActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       if (this.rutaArchivo.equals("")){
+           JOptionPane.showMessageDialog(null,"No se a cargado un archivo", "Nota",JOptionPane.WARNING_MESSAGE);
+       }else{
+
+            File archivo;
+
+            if(!this.rutaArchivo.equals("")){
+
+                String texto = "";
+
+                try {
+                    archivo = new File(this.rutaArchivo);
+     //               FileReader fr = new FileReader(archivo.getAbsolutePath());
+       //             BufferedReader b = new BufferedReader(fr);
+                    FileWriter escribir = new FileWriter(archivo);
+                    BufferedWriter b = new BufferedWriter(escribir);
+                    PrintWriter p = new PrintWriter(b);
+                    
+                    texto = TextoArchivo.getText();
+ 
+                    p.write(texto);
+                    
+                    p.close();
+                    b.close();
+
+                    JOptionPane.showMessageDialog(null,"Se guardaron los cambios");
+                } catch (Exception ex) {
+                    Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+            }
+           
+       }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       JFileChooser fc = new JFileChooser();
+       fc.showSaveDialog(this);
+       File f = fc.getSelectedFile();
+       //System.out.print("esta es la ruta de mi archivo nuevo" +f.getAbsolutePath());
+       
+       if(f != null){
+           try {
+            FileWriter escribir = new FileWriter(f);
+            String texto = TextoArchivo.getText();
+            escribir.write(texto);
+            escribir.close();
+            JOptionPane.showMessageDialog(null,"Se guardo el archivo");
+            if (this.rutaArchivo.equals("")){
+                  this.rutaArchivo = f.getAbsolutePath();
+             }
+         } catch (Exception ex) {
+             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+         }
+       }
+
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
